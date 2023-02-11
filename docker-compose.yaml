@@ -20,7 +20,7 @@ services:
       - "3306:3306"
     volumes:
       - mysqldb:/var/lib/mysql
-      - mysql-config/my.cnf:/etc/mysql/my.cnf
+      - ./mysql-config/my.cnf:/etc/mysql/my.cnf
     networks:
       - megait-net
 
@@ -38,14 +38,14 @@ services:
     working_dir: /var/www
     volumes:
       - application:/var/www/megait 
-      - php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     depends_on:
       - db
     networks:
       - megait-net
   
-  # Volumes
-  volumes:
-    logs:
-      driver: local
+#Volumes
+volumes:
+  mysqldb:
+  application:
   
