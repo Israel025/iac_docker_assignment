@@ -1,0 +1,54 @@
+version: '3'
+
+networks:
+  megait-net:
+    driver: bridge
+
+services:    
+  db:
+    image: mysql:latest
+    container_name: megait-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_NAME: mysql
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./megaitDB_data/mysqldb:/var/lib/mysql
+      - megaitDB_data/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - megait-net
+
+  apps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: megait/php
+    container_name: megait_app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - application:/var/www/megait 
+      - php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - db
+    networks:
+      - megait-net
+  
+  # Volumes
+  volumes:
+    megaitDB_data:
+      name: megait-App-DB
+      driver: local
+    application:
+      name: megait-App
+      driver: local
