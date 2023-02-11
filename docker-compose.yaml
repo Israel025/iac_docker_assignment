@@ -19,8 +19,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./megaitDB_data/mysqldb:/var/lib/mysql
-      - megaitDB_data/my.cnf:/etc/mysql/my.cnf
+      - mysqldb:/var/lib/mysql
+      - mysql-config/my.cnf:/etc/mysql/my.cnf
     networks:
       - megait-net
 
@@ -46,9 +46,6 @@ services:
   
   # Volumes
   volumes:
-    megaitDB_data:
-      name: megait-App-DB
+    logs:
       driver: local
-    application:
-      name: megait-App
-      driver: local
+  
