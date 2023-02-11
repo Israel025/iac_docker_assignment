@@ -10,12 +10,7 @@ WORKDIR /var/www/megait
 # Install system dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        jpegoptim optipng pngquant gifsicle \
-        build-essential \
         libpng-dev \
-        libzip-dev \
-        libjpeg62-turbo-dev \
-        libfreetype6-dev \
         locales \
         unzip \
         zip \
@@ -25,11 +20,7 @@ RUN apt-get update \
         curl \
         git \
         libonig-dev \
-        libxml2-dev \
-        lsb-release \  
-        apt-transport-https \
-        ca-certificates \
-        software-properties-common
+        libxml2-dev 
 
 # Clean cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -45,12 +36,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
         opcache \
         mbstring \
         pdo_mysql \
-        mysql \
-        mysqli \
         pcntl \
-        zip \
-        sockets \
-        intl \
         bcmath
 
 # Create system user to run Composer and Artisan Commands
