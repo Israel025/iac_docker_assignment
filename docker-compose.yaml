@@ -21,11 +21,15 @@ services:
     volumes:
       - mysqldb:/var/lib/mysql
       - ./mysql-config/my.cnf:/etc/mysql/my.cnf
+      - db_logs:/var/log/mysql
     networks:
       - megait-net
 
-  apps:
+  app:
     build:
+      args:
+        - user=${USER}
+        - uid=${UID}
       context: .
       dockerfile: Dockerfile
     image: megait/php
@@ -35,10 +39,11 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
-    working_dir: /var/www
+    working_dir: /var/www/megait
     volumes:
-      - application:/var/www/megait 
+      - ./:/var/www/megait 
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - apache-logs:/var/log/apache2
     depends_on:
       - db
     networks:
@@ -47,5 +52,5 @@ services:
 #Volumes
 volumes:
   mysqldb:
-  application:
-  
+  db_logs:
+  apache-logs:
