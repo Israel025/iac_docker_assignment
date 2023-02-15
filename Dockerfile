@@ -43,7 +43,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u ${uid} -d /home/$user $user
+RUN useradd -G www-data,root -u ${uid} -d /home/{user} {user}
 RUN mkdir -p /home/${user}/.composer && \
     chown -R ${user}:${user} /home/${user}
 
@@ -51,13 +51,10 @@ RUN mkdir -p /home/${user}/.composer && \
 COPY . /var/www/megait
 
 # Copy existing application directory permissions
-COPY --chown=$user:$user . /var/www/megait/
-
-RUN chown -R ${user}:www-data . \
+RUN chown -R ${user}:www-data /var/www/megait \
     && find . -type f -exec chmod 664 {} \; \
     && find . -type d -exec chmod 775 {} \; \
-    && chgrp -R www-data storage bootstrap/cache \
-    && chmod -R ug+rwx storage bootstrap/cache
+    && chmod -R 775 storage bootstrap/cache
 
 RUN composer install --no-interaction --no-dev --prefer-dist
 
@@ -65,10 +62,6 @@ COPY apache-config/megait.conf /etc/apache2/sites-available/megait.conf
 
 RUN a2enmod rewrite && \
     a2dissite 000-default.conf && \
-    a2ensite megait.conf && \
-    service apache2 restart
+    a2ensite megait.conf
 
-# Expose port 9000 and start a custom entrypoint
-EXPOSE 9000
-
-ENTRYPOINT ["bash", "/seeds.sh"]
+CMD ["apache2-foreground"]

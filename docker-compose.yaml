@@ -36,9 +36,14 @@ services:
     container_name: megait_app
     restart: unless-stopped
     tty: true
+    command: > 
+        bash -c "php artisan key:generate
+        && php artisan config:cache
+        && php artisan migrate:fresh
+        && php artisan migrate --seed
+        && composer update --no-interaction --no-dev --prefer-dist"
     ports:
       - "8000:80"
-      - "8010:9000"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
