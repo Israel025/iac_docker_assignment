@@ -36,6 +36,7 @@ services:
     container_name: ${APP_NAME}_app
     restart: unless-stopped
     tty: true
+    stdin_open: true
     command: > 
         bash -c "php artisan key:generate
         && php artisan config:cache

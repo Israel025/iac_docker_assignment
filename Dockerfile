@@ -64,4 +64,4 @@ RUN a2enmod rewrite && \
     a2dissite 000-default.conf && \
     a2ensite megait.conf
 
-CMD ["apache2-foreground"]
+#CMD ["apache2-foreground"]
