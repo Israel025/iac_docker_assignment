@@ -7,7 +7,7 @@ networks:
 services:    
   db:
     image: mysql:latest
-    container_name: megait-db
+    container_name: ${APP_NAME}_db
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -33,7 +33,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: megait/php
-    container_name: megait_app
+    container_name: ${APP_NAME}_app
     restart: unless-stopped
     tty: true
     command: > 
