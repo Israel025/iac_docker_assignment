@@ -1,4 +1,4 @@
-FROM php:apache-bullseye
+FROM php:8.1-apache
 
 # Arguments defined in docker-compose.yml
 ARG user
@@ -64,4 +64,7 @@ RUN a2enmod rewrite && \
     a2dissite 000-default.conf && \
     a2ensite megait.conf
 
-#CMD ["apache2-foreground"]
+# Expose port 80 and start apache server
+EXPOSE 9000
+
+CMD ["apache2-foreground"]

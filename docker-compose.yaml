@@ -42,7 +42,8 @@ services:
         && php artisan config:cache
         && php artisan migrate:fresh
         && php artisan migrate --seed
-        && composer update --no-interaction --no-dev --prefer-dist"
+        && composer update --no-interaction --no-dev --prefer-dist
+        && service apache2 restart"
     ports:
       - "8000:80"
     environment:
