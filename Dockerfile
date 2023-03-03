@@ -67,4 +67,4 @@ RUN a2enmod rewrite && \
 # Expose port 80 and start apache server
 EXPOSE 9000
 
-CMD ["apache2-foreground"]
+CMD ["/bin/sh"]

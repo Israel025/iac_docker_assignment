@@ -38,7 +38,7 @@ services:
     tty: true
     stdin_open: true
     command: > 
-        bash -c "php artisan key:generate
+        sh -c "php artisan key:generate
         && php artisan config:cache
         && php artisan migrate:fresh
         && php artisan migrate --seed
