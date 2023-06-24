@@ -40,8 +40,6 @@ services:
     command: > 
         sh -c "php artisan key:generate
         && php artisan config:cache
-        && php artisan migrate:fresh
-        && php artisan migrate --seed
         && composer update --no-interaction --no-dev --prefer-dist
         && service apache2 restart"
     ports:

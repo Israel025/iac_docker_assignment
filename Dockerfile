@@ -65,6 +65,6 @@ RUN a2enmod rewrite && \
     a2ensite megait.conf
 
 # Expose port 80 and start apache server
-EXPOSE 9000
+EXPOSE 80
 
-CMD ["/bin/sh"]
+CMD ["apache2-foreground"]
